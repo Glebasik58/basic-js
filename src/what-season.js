@@ -19,11 +19,6 @@ function getSeason(date) {
     throw new Error("Invalid date!");
   }
   if(date instanceof Date){
-    if(!this.date === date){
-      throw new Error("Invalid date!");
-    }
-
-
     switch(date.getMonth()){
       case 0 :
         return "winter";
