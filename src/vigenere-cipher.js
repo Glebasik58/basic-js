@@ -20,13 +20,43 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(mode = true){
+    this.mode = mode
+    this.alphabet = "QWERTYUIOPASDFGHJKLZXCVBNM".split("").sort();
+    this.modelAlphabet = {"A" : 0,"B" : 1,"C" : 2,"D" : 3,"E" : 4,"F" : 5, "G" : 6, "H" : 7, "I" : 8, "J" : 9, "K" : 10, "L" : 11, "M" : 12, "N" : 13, "O" : 14, "P" : 15, "Q" : 16, "R" : 17, "S" : 18, "T" : 19, "U" : 20, "V" : 21, "W" : 22, "X" : 23, "Y" : 24, "Z" : 25};
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(text="error421", key="error421") {
+    if(text == "error421" || key == "error421"){
+      throw new Error("Incorrect arguments!")
+    }
+
+    let result = "";
+    for(let i = 0; i < text.length; i++){
+      if(this.alphabet.includes(text[i].toUpperCase())){
+          result += this.alphabet[(this.modelAlphabet[ text[i % text.length].toUpperCase()] + this.modelAlphabet[ key[i % key.length].toUpperCase()]) % 26]
+        }
+      else{
+        result += text[i];
+      }
+    }
+    return this.mode ? result.toUpperCase() : result.split("").reverse().join("").toUpperCase()
+  }
+  
+  decrypt(text="error421", key="error421") {
+    if(text == "error421" || key == "error421"){
+      throw new Error("Incorrect arguments!")
+    }
+
+    let result = "";
+    for(let i = 0; i < text.length; i++){
+      if(this.alphabet.includes(text[i])){
+          result += this.alphabet[(this.modelAlphabet[text[i % text.length].toUpperCase()] - this.modelAlphabet[key[i % key.length].toUpperCase()]) % 26];
+      }
+      else{
+        result += text[i];
+      }
+    }
+    return result.toUpperCase();
   }
 }
 
